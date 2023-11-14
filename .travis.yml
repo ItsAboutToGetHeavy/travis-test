@@ -1,0 +1,15 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+install:
+  - docker build -t loremipsum2254/travis-test .
+
+script:
+  - docker run -d -p 8080:80 --name travis-test loremipsum2254/travis-test
+  - ss -an | grep 8080
+
+after_script:
+  - docker stop travis-test
+  - docker rm travis-test
